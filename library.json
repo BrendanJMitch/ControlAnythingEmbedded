@@ -1,0 +1,19 @@
+{
+  "name": "ControlAnythingESP32",
+  "version": "0.1.0",
+  "description": "TODO: one-line description of what this library controls",
+  "keywords": ["esp32"],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BrendanJMitch/ControlAnythingEmbedded.git"
+  },
+  "authors": [
+    {
+      "name": "Brendan Mitchell",
+      "email": "brendanjmitch@gmail.com"
+    }
+  ],
+  "license": "GPL-3.0-only",
+  "frameworks": "arduino",
+  "platforms": "espressif32"
+}

@@ -1,0 +1,13 @@
+{
+  "folders": [
+    {
+      "name": "ControlAnythingESP32",
+      "path": "."
+    },
+    {
+      "name": "example: basic",
+      "path": "examples/basic"
+    }
+  ],
+  "settings": {}
+}
