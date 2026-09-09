@@ -1,12 +1,18 @@
 #include <Arduino.h>
 #include <control_anything.h>
 #include "schema/control.h"
+#include "schema/toggle_widget.h"
+#include "schema/numeric_output_widget.h"
 
 ControlAnything& controlAnything = ControlAnything::get();
 const uint8_t RED_LED_PIN = 3;
 const uint8_t BATTERY_VOLTAGE_PIN = 4;
 FloatFunc publishBatteryVoltage;
 float voltage;
+
+void setRedLed(bool state){
+    digitalWrite(RED_LED_PIN, state);
+}
 
 void setup() {
 
@@ -23,7 +29,26 @@ void setup() {
     broker. */
     controlAnything.initialize(true);
 
-    /* Register Controls and Outputs */
+    /* Register a control attached to the "controls/red_led" topic with 
+    the callback `setRedLed`. */
+    controlAnything.addBoolControl(
+        Control(
+            {"red_led"},
+            "Red LED",  
+            ToggleWidget(true)    
+        ),
+        setRedLed   
+    );
+
+    /* Register an output attached to the topic outputs/battery_voltage
+    and obtain a callback for publishing the value. */
+    publishBatteryVoltage = controlAnything.addFloatOutput(
+        Output(
+            {"batery_voltage"},
+            "Battery",
+            NumericOutputWidget("V")
+        )
+    );
 
     /* Publish an `info` topic which contains a single json string with
     all the information that the android app needs to create a dashboard
