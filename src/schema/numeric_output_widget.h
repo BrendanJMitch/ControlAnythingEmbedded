@@ -11,3 +11,6 @@ class NumericOutputWidget : public Widget{
     private:
         const String suffix;
 };
+
+template<> struct WidgetSupports<NumericOutputWidget, DataType::INT>   : std::true_type {};
+template<> struct WidgetSupports<NumericOutputWidget, DataType::FLOAT> : std::true_type {};

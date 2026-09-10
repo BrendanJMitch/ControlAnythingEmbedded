@@ -1,6 +1,7 @@
 #pragma once
 
 #include "widget.h"
+#include "data_type.h"
 
 class ToggleWidget : public Widget{
     public:
@@ -10,4 +11,9 @@ class ToggleWidget : public Widget{
 
     private:
         const bool defaultVal;
+
 };
+
+
+template<> struct WidgetSupports<ToggleWidget, DataType::BOOL> : std::true_type {};
+

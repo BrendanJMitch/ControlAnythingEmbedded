@@ -4,6 +4,7 @@
 
 #include "schema/control.h"
 #include "schema/output.h"
+#include "schema/data_type.h"
 
 typedef void (*IntFunc)(int);
 typedef void (*BoolFunc)(bool);
@@ -24,16 +25,15 @@ class ControlAnything {
 
         virtual void initialize(bool host) = 0;
 
-        virtual void addIntControl(const Control& control, IntFunc callback);
-        virtual void addBoolControl(const Control& control, BoolFunc callback);
-        virtual void addFloatControl(const Control& control, FloatFunc callback);
-        virtual void addStrControl(const Control& control, StrFunc callback);
+        virtual void addControl(const Control<DataType::INT>& control, IntFunc callback);
+        virtual void addControl(const Control<DataType::BOOL>& control, BoolFunc callback);
+        virtual void addControl(const Control<DataType::FLOAT>& control, FloatFunc callback);
+        virtual void addControl(const Control<DataType::STRING>& control, StrFunc callback);
 
-
-        virtual IntFunc addIntOutput(const Output& output);
-        virtual FloatFunc addFloatOutput(const Output& output);
-        virtual BoolFunc addBoolOutput(const Output& output);
-        virtual StrFunc addStrOutput(const Output& output);
+        virtual IntFunc addOutput(const Output<DataType::INT>& output);
+        virtual BoolFunc addOutput(const Output<DataType::BOOL>& output);
+        virtual FloatFunc addOutput(const Output<DataType::FLOAT>& output);
+        virtual StrFunc addOutput(const Output<DataType::STRING>& output);
 
         virtual void start() = 0;
 

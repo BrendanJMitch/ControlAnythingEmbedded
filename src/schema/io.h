@@ -5,16 +5,32 @@
 
 #include "serializable.h"
 #include "widget.h"
+#include "data_type.h"
 
+template<DataType DT>
 class IO : public Serializable {
 
     public:
-        IO(std::vector<String> topics, const String displayName, const Widget &widget);
+        template<typename WidgetT>
+        IO(std::vector<String> topics, const String displayName, const WidgetT &widget)
+            : topics(topics), displayName(displayName), widget(widget.clone()) 
+        {
+            static_assert(WidgetSupports<WidgetT, DT>::value,
+                "Cannot add widget to control with incompatible data type");
+        }
 
         const std::vector<String> topics;
         const String displayName;
         const std::unique_ptr<const Widget> widget;
 
     protected:
-        const String dumpJsonImpl(String leadingWhitespace) const;
+        const String dumpJsonImpl(String leadingWhitespace) const{
+            return
+                leadingWhitespace + "{\r\n" +
+                keyValToJson("topics", vectorToJson(topics, leadingWhitespace + TAB), leadingWhitespace + TAB) +
+                keyValToJson("displayName", displayName, leadingWhitespace + TAB) +
+                keyValToJson("type", DataTypeOf<DT>::value, leadingWhitespace + TAB) + 
+                keyValToJson("widget", widget->dumpJson(leadingWhitespace + TAB), leadingWhitespace + TAB) + 
+                leadingWhitespace + "}";
+        }
 };

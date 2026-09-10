@@ -33,38 +33,38 @@ void ControlAnything::setProjectId(String projectName)
     this->projectName = projectName;
 }
 
-void ControlAnything::addIntControl(const Control &control, IntFunc callback)
+void ControlAnything::addControl(const Control<DataType::INT> &control, IntFunc callback)
 {
 }
 
-void ControlAnything::addBoolControl(const Control &control, BoolFunc callback)
+void ControlAnything::addControl(const Control<DataType::BOOL> &control, BoolFunc callback)
 {
 }
 
-void ControlAnything::addFloatControl(const Control &control, FloatFunc callback)
+void ControlAnything::addControl(const Control<DataType::FLOAT> &control, FloatFunc callback)
 {
 }
 
-void ControlAnything::addStrControl(const Control &control, StrFunc callback)
+void ControlAnything::addControl(const Control<DataType::STRING> &control, StrFunc callback)
 {
 }
 
-IntFunc ControlAnything::addIntOutput(const Output &output)
+IntFunc ControlAnything::addOutput(const Output<DataType::INT> &output)
 {
     return IntFunc();
 }
 
-FloatFunc ControlAnything::addFloatOutput(const Output &output)
-{
-    return FloatFunc();
-}
-
-BoolFunc ControlAnything::addBoolOutput(const Output &output)
+BoolFunc ControlAnything::addOutput(const Output<DataType::BOOL> &output)
 {
     return BoolFunc();
 }
 
-StrFunc ControlAnything::addStrOutput(const Output &output)
+FloatFunc ControlAnything::addOutput(const Output<DataType::FLOAT> &output)
+{
+    return FloatFunc();
+}
+
+StrFunc ControlAnything::addOutput(const Output<DataType::STRING> &output)
 {
     return StrFunc();
 }

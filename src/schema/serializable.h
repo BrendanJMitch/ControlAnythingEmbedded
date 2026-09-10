@@ -7,7 +7,7 @@
 class Serializable {
 
     public:
-        const static String TAB;
+        static constexpr const char* TAB = "    ";
         virtual const String dumpJson(String leadingWhitespace) const = 0;
 
     protected:

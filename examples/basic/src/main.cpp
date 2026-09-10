@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <control_anything.h>
+#include "schema/data_type.h"
 #include "schema/control.h"
 #include "schema/toggle_widget.h"
 #include "schema/numeric_output_widget.h"
@@ -31,8 +32,8 @@ void setup() {
 
     /* Register a control attached to the "controls/red_led" topic with 
     the callback `setRedLed`. */
-    controlAnything.addBoolControl(
-        Control(
+    controlAnything.addControl(
+        Control<DataType::BOOL>(
             {"red_led"},
             "Red LED",  
             ToggleWidget(true)    
@@ -42,8 +43,8 @@ void setup() {
 
     /* Register an output attached to the topic outputs/battery_voltage
     and obtain a callback for publishing the value. */
-    publishBatteryVoltage = controlAnything.addFloatOutput(
-        Output(
+    publishBatteryVoltage = controlAnything.addOutput(
+        Output<DataType::FLOAT>(
             {"batery_voltage"},
             "Battery",
             NumericOutputWidget("V")

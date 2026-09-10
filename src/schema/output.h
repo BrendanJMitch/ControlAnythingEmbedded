@@ -1,9 +1,20 @@
 #pragma once
 
 #include "io.h"
+#include "data_type.h"
 
-class Output : public IO {
+template<DataType DT>
+class Output : public IO<DT> {
+
     public:
-        Output(std::vector<String> topics, String displayName, const Widget &widget);
-        virtual const String dumpJson(String leadingWhitespace) const;
+        template<typename WidgetT>
+        Output(std::vector<String> topics, String displayName, const WidgetT &widget)
+            : IO<DT>(topics, displayName, widget)
+        {
+        }
+        
+        virtual const String dumpJson(String leadingWhitespace) const
+        {
+            return IO<DT>::dumpJsonImpl(leadingWhitespace);
+        }
 };
