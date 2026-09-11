@@ -1,9 +1,10 @@
 #pragma once
 
-#include <Arduino.h>
 #include "control_anything.h"
+#include <Arduino.h>
 
-class ControlAnythingEsp32 : public ControlAnything {
+class ControlAnythingEsp32 : public ControlAnything
+{
 
     public:
         ControlAnythingEsp32();
@@ -12,5 +13,6 @@ class ControlAnythingEsp32 : public ControlAnything {
 
     protected:
         virtual void subscribe(String topic, std::function<void(String)>) override;
-
 };
+
+using ControlAnythingImpl = ControlAnythingEsp32;

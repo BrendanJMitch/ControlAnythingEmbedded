@@ -2,7 +2,8 @@
 
 #include "widget.h"
 
-class NumericOutputWidget : public Widget{
+class NumericOutputWidget : public Widget
+{
     public:
         static constexpr const int arity = 1;
 
@@ -14,5 +15,11 @@ class NumericOutputWidget : public Widget{
         const String suffix;
 };
 
-template<> struct WidgetSupports<NumericOutputWidget, DataType::INT>   : std::true_type {};
-template<> struct WidgetSupports<NumericOutputWidget, DataType::FLOAT> : std::true_type {};
+template <>
+struct WidgetSupports<NumericOutputWidget, DataType::INT> : std::true_type
+{
+};
+template <>
+struct WidgetSupports<NumericOutputWidget, DataType::FLOAT> : std::true_type
+{
+};

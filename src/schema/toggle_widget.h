@@ -1,9 +1,10 @@
 #pragma once
 
-#include "widget.h"
 #include "data_type.h"
+#include "widget.h"
 
-class ToggleWidget : public Widget{
+class ToggleWidget : public Widget
+{
     public:
         static constexpr const int arity = 1;
 
@@ -13,9 +14,9 @@ class ToggleWidget : public Widget{
 
     private:
         const bool defaultVal;
-
 };
 
-
-template<> struct WidgetSupports<ToggleWidget, DataType::BOOL> : std::true_type {};
-
+template <>
+struct WidgetSupports<ToggleWidget, DataType::BOOL> : std::true_type
+{
+};

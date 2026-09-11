@@ -1,8 +1,6 @@
 #include "toggle_widget.h"
 
-ToggleWidget::ToggleWidget(bool defaultVal) : defaultVal(defaultVal)
-{
-}
+ToggleWidget::ToggleWidget(bool defaultVal) : defaultVal(defaultVal) {}
 
 std::unique_ptr<Widget> ToggleWidget::clone() const
 {

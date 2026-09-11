@@ -4,25 +4,25 @@
 #include <functional>
 
 #include "schema/control.h"
-#include "schema/output.h"
 #include "schema/data_type.h"
+#include "schema/output.h"
 
 typedef std::function<void(const uint8_t, const int)> IntCallback;
 typedef std::function<void(const uint8_t, const bool)> BoolCallback;
 typedef std::function<void(const uint8_t, const float)> FloatCallback;
 typedef std::function<void(const uint8_t, const String)> StringCallback;
 
-class ControlAnything {
+class ControlAnything
+{
 
     public:
         ControlAnything();
-        static ControlAnything &get();
+        static ControlAnything& get();
 
         void setNetworkSSID(String ssid);
         void setNetworkPassword(String password);
         void setDeviceName(String deviceName);
         void setProjectId(String projectName);
-
 
         virtual void initialize(bool host) = 0;
 

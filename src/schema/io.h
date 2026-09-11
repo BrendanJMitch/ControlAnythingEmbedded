@@ -3,22 +3,23 @@
 #include <memory>
 #include <vector>
 
+#include "data_type.h"
 #include "serializable.h"
 #include "widget.h"
-#include "data_type.h"
 
-template<DataType DT>
-class IO : public Serializable {
+template <DataType DT>
+class IO : public Serializable
+{
 
     public:
-        template<typename WidgetT, size_t N>
-        IO(std::array<String, N> topics, const String displayName, const WidgetT &widget)
-            : topics(topics.begin(), topics.end()), displayName(displayName), widget(widget.clone()) 
+        template <typename WidgetT, size_t N>
+        IO(std::array<String, N> topics, const String displayName, const WidgetT& widget)
+            : topics(topics.begin(), topics.end()), displayName(displayName), widget(widget.clone())
         {
             static_assert(WidgetSupports<WidgetT, DT>::value,
-                "Cannot add widget to control with incompatible data type");
+                          "Cannot add widget to control with incompatible data type");
             static_assert(WidgetT::arity == N || WidgetT::arity < 0,
-                "Incorrect number of topics assigned to this widget");
+                          "Incorrect number of topics assigned to this widget");
         }
 
         const std::vector<String> topics;
@@ -26,7 +27,8 @@ class IO : public Serializable {
         const std::unique_ptr<const Widget> widget;
 
     protected:
-        const String dumpJsonImpl(const uint8_t indentLevel) const {
+        const String dumpJsonImpl(const uint8_t indentLevel) const
+        {
             String indent = getIndent(indentLevel);
             return indent + "{\r\n" +
                    keyValToJson(indentLevel + 1, "topics", vectorToJson(indentLevel + 1, topics)) +

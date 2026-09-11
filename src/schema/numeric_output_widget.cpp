@@ -2,10 +2,7 @@
 
 #include <memory>
 
-
-NumericOutputWidget::NumericOutputWidget(String suffix) : suffix(suffix)
-{
-}
+NumericOutputWidget::NumericOutputWidget(String suffix) : suffix(suffix) {}
 
 std::unique_ptr<Widget> NumericOutputWidget::clone() const
 {
