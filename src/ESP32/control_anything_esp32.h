@@ -7,10 +7,10 @@ class ControlAnythingEsp32 : public ControlAnything {
 
     public:
         ControlAnythingEsp32();
-        virtual void initialize(bool host);
-        virtual void start();
+        virtual void initialize(bool host) override;
+        virtual void start() override;
 
     protected:
-        virtual void subscribe(String topic, StrFunc callback);
+        virtual void subscribe(String topic, std::function<void(String)>) override;
 
 };

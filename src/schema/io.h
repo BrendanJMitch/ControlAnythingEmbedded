@@ -11,12 +11,14 @@ template<DataType DT>
 class IO : public Serializable {
 
     public:
-        template<typename WidgetT>
-        IO(std::vector<String> topics, const String displayName, const WidgetT &widget)
-            : topics(topics), displayName(displayName), widget(widget.clone()) 
+        template<typename WidgetT, size_t N>
+        IO(std::array<String, N> topics, const String displayName, const WidgetT &widget)
+            : topics(topics.begin(), topics.end()), displayName(displayName), widget(widget.clone()) 
         {
             static_assert(WidgetSupports<WidgetT, DT>::value,
                 "Cannot add widget to control with incompatible data type");
+            static_assert(WidgetT::arity == N || WidgetT::arity < 0,
+                "Incorrect number of topics assigned to this widget");
         }
 
         const std::vector<String> topics;

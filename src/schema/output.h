@@ -7,8 +7,8 @@ template<DataType DT>
 class Output : public IO<DT> {
 
     public:
-        template<typename WidgetT>
-        Output(std::vector<String> topics, String displayName, const WidgetT &widget)
+        template<typename WidgetT, size_t N>
+        Output(std::array<String, N> topics, String displayName, const WidgetT &widget)
             : IO<DT>(topics, displayName, widget)
         {
         }

@@ -1,15 +1,16 @@
 #pragma once
 
 #include <Arduino.h>
+#include <functional>
 
 #include "schema/control.h"
 #include "schema/output.h"
 #include "schema/data_type.h"
 
-typedef void (*IntFunc)(int);
-typedef void (*BoolFunc)(bool);
-typedef void (*FloatFunc)(float);
-typedef void (*StrFunc)(String);
+typedef std::function<void(const uint8_t, const int)> IntCallback;
+typedef std::function<void(const uint8_t, const bool)> BoolCallback;
+typedef std::function<void(const uint8_t, const float)> FloatCallback;
+typedef std::function<void(const uint8_t, const String)> StringCallback;
 
 class ControlAnything {
 
@@ -17,23 +18,23 @@ class ControlAnything {
         ControlAnything();
         static ControlAnything &get();
 
-        virtual void setNetworkSSID(String ssid);
-        virtual void setNetworkPassword(String password);
-        virtual void setDeviceName(String deviceName);
-        virtual void setProjectId(String projectName);
+        void setNetworkSSID(String ssid);
+        void setNetworkPassword(String password);
+        void setDeviceName(String deviceName);
+        void setProjectId(String projectName);
 
 
         virtual void initialize(bool host) = 0;
 
-        virtual void addControl(const Control<DataType::INT>& control, IntFunc callback);
-        virtual void addControl(const Control<DataType::BOOL>& control, BoolFunc callback);
-        virtual void addControl(const Control<DataType::FLOAT>& control, FloatFunc callback);
-        virtual void addControl(const Control<DataType::STRING>& control, StrFunc callback);
+        void addControl(const Control<DataType::INT>& control, IntCallback callback);
+        void addControl(const Control<DataType::BOOL>& control, BoolCallback callback);
+        void addControl(const Control<DataType::FLOAT>& control, FloatCallback callback);
+        void addControl(const Control<DataType::STRING>& control, StringCallback callback);
 
-        virtual IntFunc addOutput(const Output<DataType::INT>& output);
-        virtual BoolFunc addOutput(const Output<DataType::BOOL>& output);
-        virtual FloatFunc addOutput(const Output<DataType::FLOAT>& output);
-        virtual StrFunc addOutput(const Output<DataType::STRING>& output);
+        IntCallback addOutput(const Output<DataType::INT>& output);
+        BoolCallback addOutput(const Output<DataType::BOOL>& output);
+        FloatCallback addOutput(const Output<DataType::FLOAT>& output);
+        StringCallback addOutput(const Output<DataType::STRING>& output);
 
         virtual void start() = 0;
 
@@ -45,5 +46,5 @@ class ControlAnything {
         String controls;
         String outputs;
 
-        virtual void subscribe(String topic, StrFunc callback) = 0;
+        virtual void subscribe(String topic, std::function<void(String)>) = 0;
 };

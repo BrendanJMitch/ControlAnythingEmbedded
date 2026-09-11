@@ -12,6 +12,6 @@ void ControlAnythingEsp32::start()
 {
 }
 
-void ControlAnythingEsp32::subscribe(String topic, StrFunc callback)
+void ControlAnythingEsp32::subscribe(String topic, std::function<void(String)>)
 {
 }

@@ -4,6 +4,8 @@
 
 class NumericOutputWidget : public Widget{
     public:
+        static constexpr const int arity = 1;
+
         NumericOutputWidget(String suffix);
         std::unique_ptr<Widget> clone() const override;
         const String dumpJson(String leadingWhitespace) const override;

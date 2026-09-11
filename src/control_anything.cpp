@@ -33,38 +33,46 @@ void ControlAnything::setProjectId(String projectName)
     this->projectName = projectName;
 }
 
-void ControlAnything::addControl(const Control<DataType::INT> &control, IntFunc callback)
+void ControlAnything::addControl(const Control<DataType::INT> &control, IntCallback callback)
+{
+    controls += ",\r\n" + control.dumpJson("        "); // TODO: refactor dumpJson to take int indentLevel instead of leadingWhitespace
+    for (uint8_t i = 0; i < control.topics.size(); i++)
+    {
+        subscribe(control.topics[i], [i, callback](String value)
+        {
+            callback(i, value.toInt()); 
+        });
+    }
+}
+
+void ControlAnything::addControl(const Control<DataType::BOOL> &control, BoolCallback callback)
 {
 }
 
-void ControlAnything::addControl(const Control<DataType::BOOL> &control, BoolFunc callback)
+void ControlAnything::addControl(const Control<DataType::FLOAT> &control, FloatCallback callback)
 {
 }
 
-void ControlAnything::addControl(const Control<DataType::FLOAT> &control, FloatFunc callback)
+void ControlAnything::addControl(const Control<DataType::STRING> &control, StringCallback callback)
 {
 }
 
-void ControlAnything::addControl(const Control<DataType::STRING> &control, StrFunc callback)
+IntCallback ControlAnything::addOutput(const Output<DataType::INT> &output)
 {
+    return IntCallback();
 }
 
-IntFunc ControlAnything::addOutput(const Output<DataType::INT> &output)
+BoolCallback ControlAnything::addOutput(const Output<DataType::BOOL> &output)
 {
-    return IntFunc();
+    return BoolCallback();
 }
 
-BoolFunc ControlAnything::addOutput(const Output<DataType::BOOL> &output)
+FloatCallback ControlAnything::addOutput(const Output<DataType::FLOAT> &output)
 {
-    return BoolFunc();
+    return FloatCallback();
 }
 
-FloatFunc ControlAnything::addOutput(const Output<DataType::FLOAT> &output)
+StringCallback ControlAnything::addOutput(const Output<DataType::STRING> &output)
 {
-    return FloatFunc();
-}
-
-StrFunc ControlAnything::addOutput(const Output<DataType::STRING> &output)
-{
-    return StrFunc();
+    return StringCallback();
 }

@@ -7,8 +7,8 @@ template<DataType DT>
 class Control : public IO<DT> {
 
     public:
-        template<typename WidgetT>
-        Control(std::vector<String> topics, String displayName, const WidgetT& widget)
+        template<typename WidgetT, size_t N>
+        Control(std::array<String, N> topics, String displayName, const WidgetT& widget)
             : IO<DT>(topics, displayName, widget)
         {
         }

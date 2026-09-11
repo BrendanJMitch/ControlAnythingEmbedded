@@ -8,10 +8,10 @@
 ControlAnything& controlAnything = ControlAnything::get();
 const uint8_t RED_LED_PIN = 3;
 const uint8_t BATTERY_VOLTAGE_PIN = 4;
-FloatFunc publishBatteryVoltage;
+FloatCallback publishBatteryVoltage;
 float voltage;
 
-void setRedLed(bool state){
+void setRedLed(uint8_t, bool state){
     digitalWrite(RED_LED_PIN, state);
 }
 
@@ -34,7 +34,7 @@ void setup() {
     the callback `setRedLed`. */
     controlAnything.addControl(
         Control<DataType::BOOL>(
-            {"red_led"},
+            std::array<String, 1>{"red_led"},
             "Red LED",  
             ToggleWidget(true)    
         ),
@@ -45,7 +45,7 @@ void setup() {
     and obtain a callback for publishing the value. */
     publishBatteryVoltage = controlAnything.addOutput(
         Output<DataType::FLOAT>(
-            {"batery_voltage"},
+            std::array<String, 1>{"battery_voltage"},
             "Battery",
             NumericOutputWidget("V")
         )
@@ -83,5 +83,5 @@ void setup() {
 
 void loop() {
     voltage = analogRead(BATTERY_VOLTAGE_PIN) / 100.0;
-    publishBatteryVoltage(voltage);
+    publishBatteryVoltage(0, voltage);
 }
