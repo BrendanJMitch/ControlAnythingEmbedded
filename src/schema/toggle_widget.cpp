@@ -9,7 +9,7 @@ std::unique_ptr<Widget> ToggleWidget::clone() const
     return std::unique_ptr<ToggleWidget>(new ToggleWidget(*this));
 }
 
-const String ToggleWidget::dumpJson(String leadingWhitespace) const
+const String ToggleWidget::dumpJson(const uint8_t indentLevel) const
 {
-    return "";
+    return String();
 }

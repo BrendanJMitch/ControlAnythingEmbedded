@@ -26,13 +26,13 @@ class IO : public Serializable {
         const std::unique_ptr<const Widget> widget;
 
     protected:
-        const String dumpJsonImpl(String leadingWhitespace) const{
-            return
-                leadingWhitespace + "{\r\n" +
-                keyValToJson("topics", vectorToJson(topics, leadingWhitespace + TAB), leadingWhitespace + TAB) +
-                keyValToJson("displayName", displayName, leadingWhitespace + TAB) +
-                keyValToJson("type", DataTypeOf<DT>::value, leadingWhitespace + TAB) + 
-                keyValToJson("widget", widget->dumpJson(leadingWhitespace + TAB), leadingWhitespace + TAB) + 
-                leadingWhitespace + "}";
+        const String dumpJsonImpl(const uint8_t indentLevel) const {
+            String indent = getIndent(indentLevel);
+            return indent + "{\r\n" +
+                   keyValToJson(indentLevel + 1, "topics", vectorToJson(indentLevel + 1, topics)) +
+                   keyValToJson(indentLevel + 1, "displayName", displayName) +
+                   keyValToJson(indentLevel + 1, "type", DataTypeOf<DT>::value) +
+                   keyValToJson(indentLevel + 1, "widget", widget->dumpJson(indentLevel + 1)) +
+                   indent + "}";
         }
 };

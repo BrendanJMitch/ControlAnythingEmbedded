@@ -8,7 +8,7 @@ class NumericOutputWidget : public Widget{
 
         NumericOutputWidget(String suffix);
         std::unique_ptr<Widget> clone() const override;
-        const String dumpJson(String leadingWhitespace) const override;
+        const String dumpJson(const uint8_t indentLevel) const override;
 
     private:
         const String suffix;

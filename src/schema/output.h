@@ -13,8 +13,8 @@ class Output : public IO<DT> {
         {
         }
         
-        virtual const String dumpJson(String leadingWhitespace) const
+        virtual const String dumpJson(const uint8_t indentLevel) const override
         {
-            return IO<DT>::dumpJsonImpl(leadingWhitespace);
+            return IO<DT>::dumpJsonImpl(indentLevel);
         }
 };

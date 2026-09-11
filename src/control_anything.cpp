@@ -35,7 +35,7 @@ void ControlAnything::setProjectId(String projectName)
 
 void ControlAnything::addControl(const Control<DataType::INT> &control, IntCallback callback)
 {
-    controls += ",\r\n" + control.dumpJson("        "); // TODO: refactor dumpJson to take int indentLevel instead of leadingWhitespace
+    controls += ",\r\n" + control.dumpJson(2);
     for (uint8_t i = 0; i < control.topics.size(); i++)
     {
         subscribe(control.topics[i], [i, callback](String value)

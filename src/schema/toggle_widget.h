@@ -9,7 +9,7 @@ class ToggleWidget : public Widget{
 
         ToggleWidget(bool defaultVal);
         std::unique_ptr<Widget> clone() const override;
-        const String dumpJson(String leadingWhitespace) const override;
+        const String dumpJson(const uint8_t indentLevel) const override;
 
     private:
         const bool defaultVal;

@@ -12,7 +12,7 @@ std::unique_ptr<Widget> NumericOutputWidget::clone() const
     return std::unique_ptr<NumericOutputWidget>(new NumericOutputWidget(*this));
 }
 
-const String NumericOutputWidget::dumpJson(String leadingWhitespace) const
+const String NumericOutputWidget::dumpJson(const uint8_t indentLevel) const
 {
     return String();
 }
