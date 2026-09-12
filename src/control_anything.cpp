@@ -1,6 +1,11 @@
 #include "control_anything.h"
+
+#include <Arduino.h>
+
 #include "platform_config.h"
 #include "schema/control.h"
+#include "schema/data_type.h"
+#include "schema/output.h"
 
 ControlAnything::ControlAnything() {}
 
@@ -25,14 +30,14 @@ void ControlAnything::setDeviceName(String deviceName)
     this->deviceName = deviceName;
 }
 
-void ControlAnything::setProjectId(String projectName)
+void ControlAnything::setProjectId(String projectId)
 {
-    this->projectName = projectName;
+    this->projectId = projectId;
 }
 
 void ControlAnything::addControl(const Control<DataType::INT>& control, IntCallback callback)
 {
-    controls += ",\r\n" + control.dumpJson(2);
+    controlsJson += ",\r\n" + control.dumpJson(2);
     for (uint8_t i = 0; i < control.topics.size(); i++)
     {
         subscribe(control.topics[i], [i, callback](String value) { callback(i, value.toInt()); });

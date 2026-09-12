@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Arduino.h>
+#include <array>
 #include <memory>
 #include <vector>
 
@@ -13,7 +15,7 @@ class IO : public Serializable
 
     public:
         template <typename WidgetT, size_t N>
-        IO(std::array<String, N> topics, const String displayName, const WidgetT& widget)
+        IO(const std::array<String, N>& topics, const String& displayName, const WidgetT& widget)
             : topics(topics.begin(), topics.end()), displayName(displayName), widget(widget.clone())
         {
             static_assert(WidgetSupports<WidgetT, DT>::value,
@@ -27,7 +29,7 @@ class IO : public Serializable
         const std::unique_ptr<const Widget> widget;
 
     protected:
-        const String dumpJsonImpl(const uint8_t indentLevel) const
+        String dumpJsonImpl(const uint8_t indentLevel) const
         {
             String indent = getIndent(indentLevel);
             return indent + "{\r\n" +

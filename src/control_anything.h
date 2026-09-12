@@ -17,12 +17,13 @@ class ControlAnything
 
     public:
         ControlAnything();
+        virtual ~ControlAnything() = default;
         static ControlAnything& get();
 
         void setNetworkSSID(String ssid);
         void setNetworkPassword(String password);
         void setDeviceName(String deviceName);
-        void setProjectId(String projectName);
+        void setProjectId(String projectId);
 
         virtual void initialize(bool host) = 0;
 
@@ -42,9 +43,9 @@ class ControlAnything
         String ssid;
         String password;
         String deviceName;
-        String projectName;
-        String controls;
-        String outputs;
+        String projectId;
+        String controlsJson;
+        String outputsJson;
 
         virtual void subscribe(String topic, std::function<void(String)>) = 0;
 };

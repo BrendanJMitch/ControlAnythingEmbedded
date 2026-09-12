@@ -9,18 +9,19 @@ class Serializable
 {
 
     public:
+        virtual ~Serializable() = default;
         static constexpr const char* TAB = "    ";
-        virtual const String dumpJson(const uint8_t indentLevel) const = 0;
+        virtual String dumpJson(const uint8_t indentLevel) const = 0;
 
     protected:
         template <typename T>
-        static const String keyValToJson(const uint8_t indentLevel, const String key, T val)
+        static String keyValToJson(const uint8_t indentLevel, const String key, T val)
         {
             return getIndent(indentLevel) + "\"" + key + "\": \"" + String(val) + "\",\r\n";
         }
 
         template <typename T>
-        static const String vectorToJson(const uint8_t indentLevel, const std::vector<T> list)
+        static String vectorToJson(const uint8_t indentLevel, const std::vector<T>& list)
         {
             String json = "[\r\n";
             String indent = getIndent(indentLevel);
@@ -32,7 +33,7 @@ class Serializable
             return json;
         }
 
-        static const String getIndent(const uint8_t indentLevel)
+        static String getIndent(const uint8_t indentLevel)
         {
             String result;
             result.reserve(indentLevel * 4);

@@ -1,5 +1,10 @@
 #pragma once
 
+#include <Arduino.h>
+#include <memory>
+#include <type_traits>
+
+#include "data_type.h"
 #include "widget.h"
 
 class NumericOutputWidget : public Widget
@@ -9,7 +14,7 @@ class NumericOutputWidget : public Widget
 
         NumericOutputWidget(String suffix);
         std::unique_ptr<Widget> clone() const override;
-        const String dumpJson(const uint8_t indentLevel) const override;
+        String dumpJson(const uint8_t indentLevel) const override;
 
     private:
         const String suffix;

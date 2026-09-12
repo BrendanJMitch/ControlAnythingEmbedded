@@ -1,5 +1,7 @@
 #pragma once
 
+#include <Arduino.h>
+
 #include "data_type.h"
 #include "io.h"
 
@@ -8,13 +10,10 @@ class Control : public IO<DT>
 {
 
     public:
-        template <typename WidgetT, size_t N>
-        Control(std::array<String, N> topics, String displayName, const WidgetT& widget)
-            : IO<DT>(topics, displayName, widget)
-        {
-        }
+        using IO<DT>::IO;
+        virtual ~Control() = default;
 
-        virtual const String dumpJson(const uint8_t indentLevel) const override
+        virtual String dumpJson(const uint8_t indentLevel) const override
         {
             return IO<DT>::dumpJsonImpl(indentLevel);
         }
