@@ -10,7 +10,8 @@ std::unique_ptr<Widget> NumericOutputWidget::clone() const
     return std::unique_ptr<NumericOutputWidget>(new NumericOutputWidget(*this));
 }
 
-String NumericOutputWidget::dumpJson(const uint8_t indentLevel) const
+void NumericOutputWidget::dumpJson(JsonObject obj) const
 {
-    return String();
+    obj["type"] = "numeric_output";
+    obj["suffix"] = suffix;
 }

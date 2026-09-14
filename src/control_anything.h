@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Arduino.h>
+#include <ArduinoJson.h>
 #include <functional>
 
 #include "schema/control.h"
@@ -40,12 +41,10 @@ class ControlAnything
         virtual void start() = 0;
 
     protected:
+        JsonDocument json;
         String ssid;
         String password;
-        String deviceName;
-        String projectId;
-        String controlsJson;
-        String outputsJson;
 
         virtual void subscribe(String topic, std::function<void(String)>) = 0;
+        virtual void publish(String topic, String value) const = 0;
 };

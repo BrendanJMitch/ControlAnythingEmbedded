@@ -29,14 +29,16 @@ class IO : public Serializable
         const std::unique_ptr<const Widget> widget;
 
     protected:
-        String dumpJsonImpl(const uint8_t indentLevel) const
+        void dumpJsonImpl(JsonObject json) const
         {
-            String indent = getIndent(indentLevel);
-            return indent + "{\r\n" +
-                   keyValToJson(indentLevel + 1, "topics", vectorToJson(indentLevel + 1, topics)) +
-                   keyValToJson(indentLevel + 1, "displayName", displayName) +
-                   keyValToJson(indentLevel + 1, "type", DataTypeOf<DT>::value) +
-                   keyValToJson(indentLevel + 1, "widget", widget->dumpJson(indentLevel + 1)) +
-                   indent + "}";
+            JsonArray topicsJson = json["topics"].to<JsonArray>();
+            for (String topic : topics)
+            {
+                topicsJson.add(topic);
+            }
+            json["displayName"] = displayName;
+            json["type"] = DataTypeOf<DT>::value;
+            JsonObject widgetJson = json["widget"].to<JsonObject>();
+            widget->dumpJson(widgetJson);
         }
 };

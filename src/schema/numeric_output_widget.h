@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Arduino.h>
+#include <ArduinoJson.h>
 #include <memory>
 #include <type_traits>
 
@@ -14,7 +15,7 @@ class NumericOutputWidget : public Widget
 
         NumericOutputWidget(String suffix);
         std::unique_ptr<Widget> clone() const override;
-        String dumpJson(const uint8_t indentLevel) const override;
+        virtual void dumpJson(JsonObject obj) const override;
 
     private:
         const String suffix;

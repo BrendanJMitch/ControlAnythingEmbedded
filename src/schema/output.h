@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Arduino.h>
+#include <ArduinoJson.h>
 
 #include "data_type.h"
 #include "io.h"
@@ -13,8 +14,8 @@ class Output : public IO<DT>
         using IO<DT>::IO;
         virtual ~Output() = default;
 
-        virtual String dumpJson(const uint8_t indentLevel) const override
+        virtual void dumpJson(JsonObject obj) const override
         {
-            return IO<DT>::dumpJsonImpl(indentLevel);
+            IO<DT>::dumpJsonImpl(obj);
         }
 };

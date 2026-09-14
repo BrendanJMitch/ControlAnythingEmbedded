@@ -15,6 +15,7 @@ class ControlAnythingEsp32 : public ControlAnything
 
     protected:
         virtual void subscribe(String topic, std::function<void(String)>) override;
+        virtual void publish(String topic, String value) const override;
 
     private:
         ControlAnythingEsp32();

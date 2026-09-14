@@ -10,7 +10,8 @@ std::unique_ptr<Widget> ToggleWidget::clone() const
     return std::unique_ptr<ToggleWidget>(new ToggleWidget(*this));
 }
 
-String ToggleWidget::dumpJson(const uint8_t indentLevel) const
+void ToggleWidget::dumpJson(JsonObject obj) const
 {
-    return String();
+    obj["type"] = "toggle";
+    obj["default_value"] = defaultVal;
 }

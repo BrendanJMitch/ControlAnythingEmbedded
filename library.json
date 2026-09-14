@@ -1,11 +1,14 @@
 {
-  "name": "ControlAnythingESP32",
+  "name": "ControlAnything",
   "version": "0.1.0",
   "description": "TODO: one-line description of what this library controls",
   "keywords": ["esp32"],
   "repository": {
     "type": "git",
     "url": "https://github.com/BrendanJMitch/ControlAnythingEmbedded.git"
+  },
+  "dependencies": {
+      "bblanchon/ArduinoJson": "^7.0.0"
   },
   "authors": [
     {
