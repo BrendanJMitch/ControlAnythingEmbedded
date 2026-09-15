@@ -3,7 +3,10 @@
 #include <Arduino.h>
 #include <ArduinoJson.h>
 #include <functional>
+#include <vector>
 
+#include "log/log_level.h"
+#include "log/log_sink.h"
 #include "schema/control.h"
 #include "schema/data_type.h"
 #include "schema/output.h"
@@ -38,13 +41,26 @@ class ControlAnything
         FloatCallback addOutput(const Output<DataType::FLOAT>& output);
         StringCallback addOutput(const Output<DataType::STRING>& output);
 
+        void addLogSink(const LogSink& sink);
+        void addLogSink(Print& sink);
+
+        void log(const LogLevel level, const String message) const;
+        void log(const uint8_t level, const String message) const;
+        void debug(const String message) const;
+        void info(const String message) const;
+        void warning(const String message) const;
+        void error(const String message) const;
+        void critical(const String message) const;
+
         virtual void start() = 0;
 
     protected:
+        uint8_t logLevel;
         JsonDocument json;
         String ssid;
         String password;
+        std::vector<const LogSink*> logSinks;
 
-        virtual void subscribe(String topic, std::function<void(String)>) = 0;
-        virtual void publish(String topic, String value) const = 0;
+        virtual void subscribe(const String topic, std::function<void(String)>) = 0;
+        virtual void publish(const String topic, const String value) const = 0;
 };

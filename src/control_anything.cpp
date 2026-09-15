@@ -2,6 +2,9 @@
 
 #include <Arduino.h>
 
+#include "log/log_sink.h"
+#include "log/print_log_sink.h"
+#include "log/publish_log_sink.h"
 #include "platform_config.h"
 #include "schema/control.h"
 #include "schema/data_type.h"
@@ -9,8 +12,11 @@
 
 ControlAnything::ControlAnything()
 {
+    logSinks.push_back(new PublishLogSink([this](const String topic, const String message)
+                                          { publish(topic, message); }));
     json["controls"].to<JsonArray>();
     json["outputs"].to<JsonArray>();
+    logLevel = LogLevel::INFO.value;
 }
 
 ControlAnything& ControlAnything::get()
@@ -112,4 +118,55 @@ StringCallback ControlAnything::addOutput(const Output<DataType::STRING>& output
     output.dumpJson(json["outputs"].as<JsonArray>().add<JsonObject>());
     std::vector<String> topics = output.topics;
     return [this, topics](uint8_t index, String value) { publish(topics[index], value); };
+}
+
+void ControlAnything::addLogSink(const LogSink& sink)
+{
+    logSinks.push_back(&sink);
+}
+
+void ControlAnything::addLogSink(Print& sink)
+{
+    logSinks.push_back(new PrintLogSink(sink));
+}
+
+void ControlAnything::log(const LogLevel level, const String message) const
+{
+    log(level.value, message);
+}
+
+void ControlAnything::log(const uint8_t level, const String message) const
+{
+    if (logLevel <= level)
+    {
+        for (const LogSink* sink : logSinks)
+        {
+            sink->write(LogLevel::DEBUG, message);
+        }
+    }
+}
+
+void ControlAnything::debug(const String message) const
+{
+    log(LogLevel::DEBUG, message);
+}
+
+void ControlAnything::info(const String message) const
+{
+    log(LogLevel::INFO, message);
+}
+
+void ControlAnything::warning(const String message) const
+{
+    log(LogLevel::WARNING, message);
+}
+
+void ControlAnything::error(const String message) const
+{
+    log(LogLevel::ERROR, message);
+}
+
+void ControlAnything::critical(const String message) const
+{
+    log(LogLevel::CRITICAL, message);
 }
